@@ -1,0 +1,70 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Restaurante</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-12>
+        <h3>{{ restaurant.name }} </h3>
+      </ion-col>
+
+      <ion-col col-12 *ngIf="restaurant.photo_full_url">
+        <img src="{{ restaurant.photo_full_url }}" alt="">
+      </ion-col>
+
+      <ion-col col-12>
+        <h5>{{ restaurant.description }}</h5>
+      </ion-col>
+
+      <ion-col col-12>
+        <button ion-button (click)="makeCall()">Ligar</button>
+        <button ion-button (click)="addVote()">Votar</button>
+        <button ion-button (click)="addList()" color="secondary">+ favorito</button>
+      </ion-col>
+
+      <ion-col col-12>
+        <div *ngIf="restaurant.votes_qtd > 0; else noVotes">
+          <ion-icon name="{{ classToVotes(1) }}"></ion-icon>
+          <ion-icon name="{{ classToVotes(2) }}"></ion-icon>
+          <ion-icon name="{{ classToVotes(3) }}"></ion-icon>
+          <ion-icon name="{{ classToVotes(4) }}"></ion-icon>
+          <ion-icon name="{{ classToVotes(5) }}"></ion-icon>
+        </div>
+        <ng-template #noVotes>
+          <p>Este restaurante não foi avaliado, seja o primeiro</p>
+        </ng-template>
+      </ion-col>
+
+      <ion-col col-12 *ngFor="let dish of dishes.data">
+        <ion-card>
+          <img src="{{ dish.photo_full_url }}">
+          <ion-card-title>
+            <span class="card-title">{{dish.name}}</span>
+          </ion-card-title>
+          <ion-card-content>
+            <p>{{ dish.description }}</p>
+            <hr>
+            <p>R$ {{ dish.price }}</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    
+      <ion-col col-12>
+        <h4>Nosso restaurante</h4>
+      </ion-col>
+    
+      <ion-col col-4 *ngFor="let photo of photos">
+        <a (click)="showImage(photo.full_url)">
+          <img src="{{photo.full_url}}">
+        </a>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

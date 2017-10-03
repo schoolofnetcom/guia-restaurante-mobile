@@ -2,9 +2,14 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { AppHttpService } from './app-http.service';
+
+import { ProfileComponent } from '../user/components/profile.component';
+import { PasswordComponent } from '../user/components/password.component';
+import { LoginComponent } from '../user/components/login.component';
+import { LogoutComponent } from '../user/components/logout.component';
 
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
 
 @Component({
   templateUrl: 'app.html'
@@ -16,15 +21,24 @@ export class MyApp {
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, private appHttpService: AppHttpService) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Home', component: HomePage },
-      { title: 'List', component: ListPage }
+      { title: 'Perfil', component: ProfileComponent },
+      { title: 'Senha', component: PasswordComponent },
+      { title: 'Login', component: LoginComponent },
+      { title: 'Logout', component: LogoutComponent },
     ];
 
+  }
+
+  ngOnInit() {
+    this.appHttpService.eventEmitter.subscribe('user', () => {
+      this.nav.push(LoginComponent);
+    });
   }
 
   initializeApp() {

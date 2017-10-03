@@ -8,11 +8,26 @@
 </ion-header>
 
 <ion-content padding>
-  <h3>Ionic Menu Starter</h3>
+  <h3>Buscar restaurantes</h3>
 
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
+  <ion-item>
+    <ion-label floating>Endereço</ion-label>
+    <ion-input type=search></ion-input>
+  </ion-item>
 
-  <button ion-button secondary menuToggle>Toggle Menu</button>
+  <div *ngIf="status === 'success'">
+    <ion-card *ngFor="let address of restaurants" (click)="touch(address)">
+      <ion-card-header>{{ address.restaurant.name }}</ion-card-header>
+      <ion-card-content>{{ address.restaurant.description }}</ion-card-content>
+    </ion-card>
+  </div>
+
+  <div *ngIf="list.length > 0">
+    <h4>Favoritos</h4>
+
+    <ion-card *ngFor="let data of list" (click)="touch(data)">
+      <ion-card-header>{{ data.restaurant.name }}</ion-card-header>
+      <ion-card-content>{{ data.restaurant.description }}</ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>
